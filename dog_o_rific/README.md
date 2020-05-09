@@ -1,4 +1,3 @@
-# DogORific
+# Dog-O-Rific
 
-**TODO: Add description**
-
+*** an Elixir / OTP Application with RESTful API using Phoenix
