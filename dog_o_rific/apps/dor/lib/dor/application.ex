@@ -7,8 +7,7 @@ defmodule Dor.Application do
 
   def start(_type, _args) do
     children = [
-      {Dor.Breeds, []},
-      {Dor.Favorites, []}
+      Dor.Repo
       # Starts a worker by calling: Dor.Worker.start_link(arg)
       # {Dor.Worker, arg}
     ]

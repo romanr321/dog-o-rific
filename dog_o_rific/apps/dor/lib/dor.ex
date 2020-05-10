@@ -33,16 +33,20 @@ defmodule Dor do
   add_favorite/1 takes an breed_id as integer and returns :ok or {:error, reason}
   ## Examples
 
-      iex> Dor.add_favorite(-1)
-      {:error, "breed id not found"}
+      iex> Dor.add_favorite(1)
+      :ok
 
 
   """
   def add_favorite(id) do
-    with {:ok, breed} <- Dor.Breeds.get(id)
-    do Dor.Favorites.add(id)
-    else
-      error -> {:error, "breed id not found"}
+    try do
+      {:ok, _breed} = Dor.Breeds.get(id)
+      :ok = Dor.Favorites.add(id)
+      :ok
+    rescue
+      error -> {:error, "couldn't add favorite, reason: #{inspect(error)}"}
+    catch
+      error -> {:error, "couldn't add favorite, reason: #{inspect(error)}"}
     end
   end
 
@@ -50,7 +54,7 @@ defmodule Dor do
   delete_favorite/1 takes an id of favorite as integer and returns :ok or {:error, reason}
   ## Examples
 
-      iex> Dor.delete_favorite(0)
+      iex> Dor.delete_favorite(1)
       :ok
 
   """

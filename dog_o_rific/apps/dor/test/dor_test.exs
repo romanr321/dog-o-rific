@@ -10,14 +10,13 @@ defmodule DorTest do
   end
 
   test "delete, add, get, delete a favorite" do
-    assert Dor.delete_favorite(1) == :ok
-    assert Dor.add_favorite(-1) == {:error, "breed id not found"}
+    assert Dor.add_favorite(-1) == {:error, "not found"}
     assert Dor.add_favorite(1) == :ok
-    assert Dor.add_favorite(1) == {:error, "breed already in favorites"}
+    assert  {:error, _} == Dor.add_favorite(1)
     favorites_list = Dor.get_favorites()
     [favorite] = Enum.filter(favorites_list, fn fave -> fave["breed"]["id"] == 1 end)
     assert is_list(Dor.get_favorites()) == true
     assert Dor.delete_favorite(favorite["id"]) == :ok
-    assert Dor.get_favorites(favorite["id"]) == :error
+    assert {:error, _} == Dor.get_favorites(favorite["id"])
   end
 end

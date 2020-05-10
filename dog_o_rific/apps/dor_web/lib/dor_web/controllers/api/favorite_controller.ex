@@ -21,18 +21,20 @@ defmodule DorWeb.Api.FavoriteController do
        %{"breed_id" => id} = Jason.decode!(post)
       :ok = Dor.add_favorite(id)
       Plug.Conn.send_resp(conn, 204, "")
-    catch
-      {:error, reason} -> Plug.Conn.send_resp(conn, 409, reason)
     rescue
-     e in MatchError -> {:error, message} = e.term
+      e in MatchError -> {:error, message} = e.term
       Plug.Conn.send_resp(conn, 409, message)
-     error -> Plug.Conn.send_resp(conn, 500, "#{inspect(error)}")
+      error -> Plug.Conn.send_resp(conn, 500, "#{inspect(error)}")
+    catch
+      error -> Plug.Conn.send_resp(conn, 409, error)
     end
   end
 
   def delete(conn, %{"id" => id}) do
-    Dor.delete_favorite(String.to_integer(id))
-    Plug.Conn.send_resp(conn, 204, "")
+    with :ok <- Dor.delete_favorite(String.to_integer(id))
+    do Plug.Conn.send_resp(conn, 204, "")
+    else error -> Plug.Conn.send_resp(conn, 409, inspect(error))
+    end
   end
 
 end

@@ -9,6 +9,12 @@
 # move said applications out of the umbrella.
 import Config
 
+config :dor, Dor.Repo,
+  database: "dor_repo",
+  username: "user",
+  password: "pass",
+  hostname: "localhost"
+
 config :dor_web,
   generators: [context_app: false]
 
@@ -19,6 +25,15 @@ config :dor_web, DorWeb.Endpoint,
   render_errors: [view: DorWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: DorWeb.PubSub,
   live_view: [signing_salt: "eP46IaeH"]
+
+config :dor, ecto_repos: [Dor.Repo]
+
+config :dor, Dor.Repo,
+   database: "dogorific",
+   username: "dogorific",
+   password: "dogorific",
+   hostname: "dogorific.cgummipxkxmx.us-east-2.rds.amazonaws.com",
+   port: "5432"
 
 # Sample configuration:
 #
@@ -35,6 +50,8 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+config :ecto, :json_library, Jason
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
