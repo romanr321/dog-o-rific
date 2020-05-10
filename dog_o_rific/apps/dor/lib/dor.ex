@@ -54,7 +54,10 @@ defmodule Dor do
   delete_favorite/1 takes an id of favorite as integer and returns :ok or {:error, reason}
   ## Examples
 
-      iex> Dor.delete_favorite(1)
+      iex> _ = Dor.add_favorite(1)
+      ...> [favorite] = Dor.get_favorites() |>
+      ...> Enum.filter(fn fave -> fave["breed"]["id"] == 1 end)
+      ...> Dor.delete_favorite(favorite["id"])
       :ok
 
   """

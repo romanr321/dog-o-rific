@@ -23,7 +23,7 @@ defmodule DorWeb.Api.FavoriteController do
       Plug.Conn.send_resp(conn, 204, "")
     rescue
       e in MatchError -> {:error, message} = e.term
-      Plug.Conn.send_resp(conn, 409, message)
+      Plug.Conn.send_resp(conn, 409, inspect(e.term))
       error -> Plug.Conn.send_resp(conn, 500, "#{inspect(error)}")
     catch
       error -> Plug.Conn.send_resp(conn, 409, error)
