@@ -1,4 +1,0 @@
-# DogORific
-
-**TODO: Add description**
-
